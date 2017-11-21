@@ -107,6 +107,24 @@ void settings_restore(uint8_t restore_flag) {
     settings.max_travel[Y_AXIS] = (-DEFAULT_Y_MAX_TRAVEL);
     settings.max_travel[Z_AXIS] = (-DEFAULT_Z_MAX_TRAVEL);
 
+#ifdef A_AXIS
+    settings.steps_per_mm[A_AXIS] = DEFAULT_A_STEPS_PER_MM;
+    settings.max_rate[A_AXIS] = DEFAULT_A_MAX_RATE;
+    settings.acceleration[A_AXIS] = DEFAULT_A_ACCELERATION;
+    settings.max_travel[A_AXIS] = (-DEFAULT_A_MAX_TRAVEL);
+#endif
+#ifdef B_AXIS
+    settings.steps_per_mm[B_AXIS] = DEFAULT_B_STEPS_PER_MM;
+    settings.max_rate[B_AXIS] = DEFAULT_B_MAX_RATE;
+    settings.acceleration[B_AXIS] = DEFAULT_B_ACCELERATION;
+    settings.max_travel[B_AXIS] = (-DEFAULT_B_MAX_TRAVEL);
+#endif
+#ifdef C_AXIS
+    settings.steps_per_mm[C_AXIS] = DEFAULT_C_STEPS_PER_MM;
+    settings.acceleration[C_AXIS] = DEFAULT_C_ACCELERATION;
+    settings.max_rate[C_AXIS] = DEFAULT_C_MAX_RATE;
+    settings.max_travel[C_AXIS] = (-DEFAULT_C_MAX_TRAVEL);
+#endif
     write_global_settings();
   }
 
@@ -318,11 +336,37 @@ uint8_t get_step_pin_mask(uint8_t axis_idx)
   #ifdef DEFAULTS_RAMPS_BOARD
     if ( axis_idx == X_AXIS ) { return((1<<STEP_BIT(X_AXIS))); }
     if ( axis_idx == Y_AXIS ) { return((1<<STEP_BIT(Y_AXIS))); }
+	#if defined(A_AXIS) || defined(B_AXIS) || defined(C_AXIS)
+	  if ( axis_idx == Z_AXIS ) { return((1<<Z_STEP_BIT)); }
+	#endif
+	#ifdef A_AXIS
+	  if ( axis_idx == A_AXIS ) { return((1<<A_STEP_BIT)); }
+	#endif
+	#ifdef B_AXIS
+	  if ( axis_idx == B_AXIS ) { return((1<<B_STEP_BIT)); }
+	#endif
+	#ifdef C_AXIS
+	  return((1<<C_STEP_BIT));
+	#else	
     return((1<<STEP_BIT(Z_AXIS)));
+	#endif
   #else
     if ( axis_idx == X_AXIS ) { return((1<<X_STEP_BIT)); }
     if ( axis_idx == Y_AXIS ) { return((1<<Y_STEP_BIT)); }
+	#if defined(A_AXIS) || defined(B_AXIS) || defined(C_AXIS)
+	  if ( axis_idx == Z_AXIS ) { return((1<<Z_STEP_BIT)); }
+	#endif
+	#ifdef A_AXIS
+	  if ( axis_idx == A_AXIS ) { return((1<<A_STEP_BIT)); }
+	#endif
+	#ifdef B_AXIS
+	  if ( axis_idx == B_AXIS ) { return((1<<B_STEP_BIT)); }
+	#endif
+	#ifdef C_AXIS
+	  return((1<<C_STEP_BIT));
+	#else	
     return((1<<Z_STEP_BIT));
+	#endif
   #endif // DEFAULTS_RAMPS_BOARD
 }
 
@@ -333,11 +377,37 @@ uint8_t get_direction_pin_mask(uint8_t axis_idx)
   #ifdef DEFAULTS_RAMPS_BOARD
     if ( axis_idx == X_AXIS ) { return((1<<DIRECTION_BIT(X_AXIS))); }
     if ( axis_idx == Y_AXIS ) { return((1<<DIRECTION_BIT(Y_AXIS))); }
+	#if defined(A_AXIS) || defined(B_AXIS) || defined(C_AXIS)
+	if ( axis_idx == Z_AXIS ) { return((1<<Z_DIRECTION_BIT)); }
+	#endif
+	#ifdef A_AXIS
+	if ( axis_idx == A_AXIS ) { return((1<<A_DIRECTION_BIT)); }
+	#endif
+	#ifdef B_AXIS
+	if ( axis_idx == B_AXIS ) { return((1<<B_DIRECTION_BIT)); }
+	#endif
+	#ifdef C_AXIS
+	return((1<<C_DIRECTION_BIT));
+	#else
     return((1<<DIRECTION_BIT(Z_AXIS)));
+	#endif
   #else
     if ( axis_idx == X_AXIS ) { return((1<<X_DIRECTION_BIT)); }
     if ( axis_idx == Y_AXIS ) { return((1<<Y_DIRECTION_BIT)); }
+	#if defined(A_AXIS) || defined(B_AXIS) || defined(C_AXIS)
+	if ( axis_idx == Z_AXIS ) { return((1<<Z_DIRECTION_BIT)); }
+	#endif
+	#ifdef A_AXIS
+	if ( axis_idx == A_AXIS ) { return((1<<A_DIRECTION_BIT)); }
+	#endif
+	#ifdef B_AXIS
+	if ( axis_idx == B_AXIS ) { return((1<<B_DIRECTION_BIT)); }
+	#endif
+	#ifdef C_AXIS
+	return((1<<C_DIRECTION_BIT));
+	#else
     return((1<<Z_DIRECTION_BIT));
+	#endif
   #endif // DEFAULTS_RAMPS_BOARD
 }
 
@@ -363,7 +433,20 @@ uint8_t get_direction_pin_mask(uint8_t axis_idx)
   {
     if ( axis_idx == X_AXIS ) { return((1<<X_LIMIT_BIT)); }
     if ( axis_idx == Y_AXIS ) { return((1<<Y_LIMIT_BIT)); }
-    return((1<<Z_LIMIT_BIT));
+    #if defined(A_AXIS) || defined(B_AXIS) || defined(C_AXIS)
+	if ( axis_idx == Z_AXIS ) { return((1<<Z_LIMIT_BIT)); }
+	#endif
+	#ifdef A_AXIS
+	if ( axis_idx == A_AXIS ) { return((1<<A_LIMIT_BIT)); }
+	#endif
+	#ifdef B_AXIS
+	if ( axis_idx == B_AXIS ) { return((1<<B_LIMIT_BIT)); }
+	#endif
+	#ifdef C_AXIS
+	return((1<<C_LIMIT_BIT));
+	#else
+	return((1<<Z_LIMIT_BIT));
+#endif
   }
 #endif //DEFAULTS_RAMPS_BOARD
 
