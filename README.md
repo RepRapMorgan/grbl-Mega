@@ -1,3 +1,8 @@
+About this fork:
+_______________
+
+Experimental: added 6-axis support, based on gnea/grbl-Mega 1.1. Not tested yet.
+
 ![GitHub Logo](https://github.com/gnea/gnea-Media/blob/master/Grbl%20Logo/Grbl%20Logo%20250px.png?raw=true)
 ***
 _Click the `Release` tab to download pre-compiled `.hex` files or just [click here](https://github.com/gnea/grbl-Mega/releases)_
