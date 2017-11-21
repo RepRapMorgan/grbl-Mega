@@ -1,7 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Project Name="grbl_mega" InternalType="">
+  <Plugins>
+    <Plugin Name="CMakePlugin">
+      <![CDATA[[{
+  "name": "Debug",
+  "enabled": false,
+  "buildDirectory": "build",
+  "sourceDirectory": "$(ProjectPath)",
+  "generator": "",
+  "buildType": "",
+  "arguments": [],
+  "parentProject": ""
+ }]]]>
+    </Plugin>
+    <Plugin Name="qmake">
+      <![CDATA[00010001N0005Debug000000000000]]>
+    </Plugin>
+  </Plugins>
   <Description/>
   <Dependencies/>
+  <VirtualDirectory Name="grbl">
+    <File Name="grbl/planner.c"/>
+    <File Name="grbl/stepper.c"/>
+    <File Name="grbl/eeprom.c"/>
+    <File Name="grbl/cpu_map.h"/>
+    <File Name="grbl/sleep.h"/>
+    <File Name="grbl/gcode.c"/>
+    <File Name="grbl/serial.h"/>
+    <File Name="grbl/spindle_control.c"/>
+    <File Name="grbl/probe.c"/>
+    <File Name="grbl/protocol.c"/>
+    <File Name="grbl/system.h"/>
+    <File Name="grbl/gcode.h"/>
+    <File Name="grbl/limits.c"/>
+    <File Name="grbl/serial.c"/>
+    <File Name="grbl/grbl.h"/>
+    <File Name="grbl/report.c"/>
+    <File Name="grbl/settings.c"/>
+    <File Name="grbl/print.h"/>
+    <File Name="grbl/motion_control.h"/>
+    <File Name="grbl/print.c"/>
+    <File Name="grbl/limits.h"/>
+    <File Name="grbl/sleep.c"/>
+    <File Name="grbl/main.c"/>
+    <File Name="grbl/coolant_control.h"/>
+    <File Name="grbl/system.c"/>
+    <File Name="grbl/coolant_control.c"/>
+    <File Name="grbl/report.h"/>
+    <File Name="grbl/spindle_control.h"/>
+    <File Name="grbl/settings.h"/>
+    <File Name="grbl/eeprom.h"/>
+    <File Name="grbl/jog.c"/>
+    <File Name="grbl/defaults.h"/>
+    <File Name="grbl/planner.h"/>
+    <File Name="grbl/protocol.h"/>
+    <File Name="grbl/jog.h"/>
+    <File Name="grbl/motion_control.c"/>
+    <File Name="grbl/config.h"/>
+    <File Name="grbl/nuts_bolts.c"/>
+    <File Name="grbl/nuts_bolts.h"/>
+    <File Name="grbl/probe.h"/>
+    <File Name="grbl/stepper.h"/>
+  </VirtualDirectory>
   <Settings Type="Dynamic Library">
     <GlobalSettings>
       <Compiler Options="" C_Options="" Assembler="">
@@ -89,47 +149,4 @@
       </Completion>
     </Configuration>
   </Settings>
-  <VirtualDirectory Name="grbl">
-    <File Name="grbl/planner.c"/>
-    <File Name="grbl/stepper.c"/>
-    <File Name="grbl/eeprom.c"/>
-    <File Name="grbl/cpu_map.h"/>
-    <File Name="grbl/sleep.h"/>
-    <File Name="grbl/gcode.c"/>
-    <File Name="grbl/serial.h"/>
-    <File Name="grbl/spindle_control.c"/>
-    <File Name="grbl/probe.c"/>
-    <File Name="grbl/protocol.c"/>
-    <File Name="grbl/system.h"/>
-    <File Name="grbl/gcode.h"/>
-    <File Name="grbl/limits.c"/>
-    <File Name="grbl/serial.c"/>
-    <File Name="grbl/grbl.h"/>
-    <File Name="grbl/report.c"/>
-    <File Name="grbl/settings.c"/>
-    <File Name="grbl/print.h"/>
-    <File Name="grbl/motion_control.h"/>
-    <File Name="grbl/print.c"/>
-    <File Name="grbl/limits.h"/>
-    <File Name="grbl/sleep.c"/>
-    <File Name="grbl/main.c"/>
-    <File Name="grbl/coolant_control.h"/>
-    <File Name="grbl/system.c"/>
-    <File Name="grbl/coolant_control.c"/>
-    <File Name="grbl/report.h"/>
-    <File Name="grbl/spindle_control.h"/>
-    <File Name="grbl/settings.h"/>
-    <File Name="grbl/eeprom.h"/>
-    <File Name="grbl/jog.c"/>
-    <File Name="grbl/defaults.h"/>
-    <File Name="grbl/planner.h"/>
-    <File Name="grbl/protocol.h"/>
-    <File Name="grbl/jog.h"/>
-    <File Name="grbl/motion_control.c"/>
-    <File Name="grbl/config.h"/>
-    <File Name="grbl/nuts_bolts.c"/>
-    <File Name="grbl/nuts_bolts.h"/>
-    <File Name="grbl/probe.h"/>
-    <File Name="grbl/stepper.h"/>
-  </VirtualDirectory>
 </CodeLite_Project>

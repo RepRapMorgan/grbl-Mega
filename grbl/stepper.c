@@ -434,6 +434,12 @@ ISR(TIMER1_COMPA_vect)
 		#ifdef A_AXIS
 		st.counter_a = st.counter_x;
 		#endif
+		#ifdef B_AXIS
+		st.counter_b = st.counter_x;
+		#endif
+		#ifdef C_AXIS
+		st.counter_c = st.counter_x;
+		#endif
       }
       #ifdef DEFAULTS_RAMPS_BOARD
         for (i = 0; i < N_AXIS; i++)

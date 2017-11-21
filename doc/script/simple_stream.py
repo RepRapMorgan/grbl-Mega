@@ -38,18 +38,19 @@ THE SOFTWARE.
 
 import serial
 import time
+import sys
 
 # Open grbl serial port
-s = serial.Serial('/dev/tty.usbmodem1811',115200)
+s = serial.Serial('/dev/ttyUSB0',115200)
 
 # Open g-code file
-f = open('grbl.gcode','r');
+f = open(sys.argv[1],'r');
 
 # Wake up grbl
 s.write("\r\n\r\n")
 time.sleep(2)   # Wait for grbl to initialize 
 s.flushInput()  # Flush startup text in serial input
-
+print "start streaming"
 # Stream g-code to grbl
 for line in f:
     l = line.strip() # Strip all EOL characters for consistency
