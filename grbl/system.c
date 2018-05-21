@@ -324,18 +324,21 @@ uint8_t system_check_travel_limits(float *target)
 {
   uint8_t idx;
   for (idx=0; idx<N_AXIS; idx++) {
-    #ifdef HOMING_FORCE_SET_ORIGIN
-      // When homing forced set origin is enabled, soft limits checks need to account for directionality.
-      // NOTE: max_travel is stored as negative
-      if (bit_istrue(settings.homing_dir_mask,bit(idx))) {
-        if (target[idx] < 0 || target[idx] > -settings.max_travel[idx]) { return(true); }
-      } else {
-        if (target[idx] > 0 || target[idx] < settings.max_travel[idx]) { return(true); }
-      }
-    #else
+// allow disabling soft limit per axis by setting max travel to zero
+    if (settings.max_travel[idx]) {
+      #ifdef HOMING_FORCE_SET_ORIGIN
+        // When homing forced set origin is enabled, soft limits checks need to account for directionality.
+        // NOTE: max_travel is stored as negative
+        if (bit_istrue(settings.homing_dir_mask,bit(idx))) {
+          if (target[idx] < 0 || target[idx] > -settings.max_travel[idx]) { return(true); }
+        } else {
+          if (target[idx] > 0 || target[idx] < settings.max_travel[idx]) { return(true); }
+        }
+      #else
       // NOTE: max_travel is stored as negative
       if (target[idx] > 0 || target[idx] < settings.max_travel[idx]) { return(true); }
-    #endif
+	  #endif
+	}
   }
   return(false);
 }

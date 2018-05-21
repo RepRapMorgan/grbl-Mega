@@ -452,6 +452,23 @@
   #define DEFAULT_HOMING_PULLOFF 1.0 // mm
 #endif
 
+#ifdef DEFAULTS_ABC_AXIS
+  #define DEFAULT_A_STEPS_PER_MM 250.0
+  #define DEFAULT_A_MAX_RATE 500.0 // mm/min
+  #define DEFAULT_A_ACCELERATION (10.0*60*60) // 10*60*60 mm/min^2 = 10 mm/sec^2
+  #define DEFAULT_A_MAX_TRAVEL 200.0 // mm
+
+  #define DEFAULT_B_STEPS_PER_MM 250.0
+  #define DEFAULT_B_MAX_RATE 500.0 // mm/min
+  #define DEFAULT_B_ACCELERATION (10.0*60*60) // 10*60*60 mm/min^2 = 10 mm/sec^2
+  #define DEFAULT_B_MAX_TRAVEL 200.0 // mm
+
+  #define DEFAULT_C_STEPS_PER_MM 250.0
+  #define DEFAULT_C_MAX_RATE 500.0 // mm/min
+  #define DEFAULT_C_ACCELERATION (10.0*60*60) // 10*60*60 mm/min^2 = 10 mm/sec^2
+  #define DEFAULT_C_MAX_TRAVEL 200.0 // mm
+#endif
+
 #ifdef DEFAULTS_RAMPS_BOARD
   #define DEFAULT_X_STEPS_PER_MM 80
   #define DEFAULT_Y_STEPS_PER_MM 80
@@ -465,6 +482,8 @@
   #define DEFAULT_X_MAX_TRAVEL 200.0 // mm
   #define DEFAULT_Y_MAX_TRAVEL 200.0 // mm
   #define DEFAULT_Z_MAX_TRAVEL 200.0 // mm
+  #define DEFAULT_A_MAX_TRAVEL 200.0 // mm
+  #define DEFAULT_B_MAX_TRAVEL 200.0 // mm
   #define DEFAULT_SPINDLE_RPM_MAX 1000.0 // rpm
   #define DEFAULT_SPINDLE_RPM_MIN 0.0 // rpm
   #define DEFAULT_STEP_PULSE_MICROSECONDS 10
@@ -477,7 +496,7 @@
   #define DEFAULT_REPORT_INCHES 0 // false
   #define DEFAULT_INVERT_ST_ENABLE 0 // false
   #define DEFAULT_INVERT_LIMIT_PINS 0 // false
-  #define DEFAULT_SOFT_LIMIT_ENABLE 1 // true
+  #define DEFAULT_SOFT_LIMIT_ENABLE 0 // true
   #define DEFAULT_HARD_LIMIT_ENABLE 0  // false
   #define DEFAULT_INVERT_PROBE_PIN 0 // false
   #define DEFAULT_LASER_MODE 0 // false

@@ -1,3 +1,10 @@
+About this fork:
+_______________
+
+Experimental: added 5-axis (6-axis) support, based on gnea/grbl-Mega 1.1. Not tested yet. 5-Axis seems to be doing something in a dry run (no steppers connected). 6-axis crashes when issueing a move on the C-Axis for yet unknown reasons. Work in progress...
+
+I added a project/workspace for Codelite, and a separate upload.sh script.
+
 ![GitHub Logo](https://github.com/gnea/gnea-Media/blob/master/Grbl%20Logo/Grbl%20Logo%20250px.png?raw=true)
 ***
 _Click the `Release` tab to download pre-compiled `.hex` files or just [click here](https://github.com/gnea/grbl-Mega/releases)_
