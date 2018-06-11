@@ -1,9 +1,14 @@
 About this fork:
 _______________
 
-Experimental: added 5-axis (6-axis) support, based on gnea/grbl-Mega 1.1. Not tested yet. 5-Axis seems to be doing something in a dry run (no steppers connected). 6-axis crashes when issueing a move on the C-Axis for yet unknown reasons. Work in progress...
+Experimental (work in progress, test carefully before using on machines): 
+* added 5-axis (6-axis) support, based on gnea/grbl-Mega 1.1. 
+6-axis crashes when issueing a move on the C-Axis for yet unknown reasons. Work in progress...
 
-I added a project/workspace for Codelite, and a separate upload.sh script.
+* extended tool offsets to work for all axes simultaneously: e.g. `G43.1 X5 Y10 Z15`
+Very useful on lathes, where the radius offset is on X, and toolholders vary in Z as well. 
+
+* I added a project/workspace for Codelite, and a separate upload.sh script.
 
 ![GitHub Logo](https://github.com/gnea/gnea-Media/blob/master/Grbl%20Logo/Grbl%20Logo%20250px.png?raw=true)
 ***
