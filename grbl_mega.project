@@ -61,6 +61,10 @@
     <File Name="grbl/nuts_bolts.h"/>
     <File Name="grbl/probe.h"/>
     <File Name="grbl/stepper.h"/>
+    <File Name="grbl/spindle_encoder.h"/>
+    <File Name="grbl/spindle_encoder.c"/>
+    <File Name="grbl/timekeeper.h"/>
+    <File Name="grbl/timekeeper.c"/>
   </VirtualDirectory>
   <Settings Type="Dynamic Library">
     <GlobalSettings>
