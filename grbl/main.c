@@ -83,11 +83,13 @@ int main(void)
     sys_rt_exec_alarm = 0;
     sys_rt_exec_motion_override = 0;
     sys_rt_exec_accessory_override = 0;
-
+    
     // Reset Grbl primary systems.
     serial_reset_read_buffer(); // Clear serial read buffer
     gc_init(); // Set g-code parser to default state
     spindle_init();
+    timekeeper_init();
+    spindle_encoder_init();
     coolant_init();
     limits_init();
     probe_init();

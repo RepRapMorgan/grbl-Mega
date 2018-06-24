@@ -209,6 +209,7 @@ void protocol_auto_cycle_start()
 // limit switches, or the main program.
 void protocol_execute_realtime()
 {
+  spindle_sync_update();
   protocol_exec_rt_system();
   if (sys.suspend) { protocol_exec_rt_suspend(); }
 }

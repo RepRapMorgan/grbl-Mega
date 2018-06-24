@@ -190,9 +190,13 @@ uint8_t gc_execute_line(char *line)
               // Otherwise, arc IJK incremental mode is default. G91.1 does nothing.
             }
             break;
-          case 93: case 94:
+          case 93: case 94: 
             word_bit = MODAL_GROUP_G5;
             gc_block.modal.feed_rate = 94 - int_value;
+            break;
+          case 95:
+            word_bit = MODAL_GROUP_G5;
+            gc_block.modal.feed_rate = FEED_RATE_MODE_UNITS_PER_REV;
             break;
           case 20: case 21:
             word_bit = MODAL_GROUP_G6;
@@ -413,9 +417,9 @@ uint8_t gc_execute_line(char *line)
       // value in the block. If no F word is passed with a motion command that requires a feed rate, this will error
       // out in the motion modes error-checking. However, if no F word is passed with NO motion command that requires
       // a feed rate, we simply move on and the state feed rate value gets updated to zero and remains undefined.
-    } else { // = G94
+    } else { // = G94 or G95. In G95 mode, the feed rate per revolution is controlled during execution.
       // - In units per mm mode: If F word passed, ensure value is in mm/min, otherwise push last state value.
-      if (gc_state.modal.feed_rate == FEED_RATE_MODE_UNITS_PER_MIN) { // Last state is also G94
+      if ((gc_state.modal.feed_rate == FEED_RATE_MODE_UNITS_PER_MIN)||(gc_state.modal.feed_rate == FEED_RATE_MODE_UNITS_PER_REV)) { // Last state is also G94
         if (bit_istrue(value_words,bit(WORD_F))) {
           if (gc_block.modal.units == UNITS_MODE_INCHES) { gc_block.values.f *= MM_PER_INCH; }
         } else {
@@ -910,7 +914,10 @@ uint8_t gc_execute_line(char *line)
 
   // [2. Set feed rate mode ]:
   gc_state.modal.feed_rate = gc_block.modal.feed_rate;
-  if (gc_state.modal.feed_rate) { pl_data->condition |= PL_COND_FLAG_INVERSE_TIME; } // Set condition flag for planner use.
+  if (gc_state.modal.feed_rate==FEED_RATE_MODE_INVERSE_TIME) { pl_data->condition |= PL_COND_FLAG_INVERSE_TIME; } // Set condition flag for planner use.
+  if (gc_state.modal.feed_rate==FEED_RATE_MODE_UNITS_PER_REV) { 
+    pl_data->condition |= PL_COND_FLAG_FEED_PER_REV | PL_COND_FLAG_NO_FEED_OVERRIDE; // Set condition flags for planner use. 
+  } 
 
   // [3. Set feed rate ]:
   gc_state.feed_rate = gc_block.values.f; // Always copy this value. See feed rate error-checking.

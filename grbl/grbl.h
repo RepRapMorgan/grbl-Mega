@@ -62,6 +62,8 @@
 #include "jog.h"
 #include "sleep.h"
 
+#include "timekeeper.h"
+#include "spindle_encoder.h"
 // ---------------------------------------------------------------------------------------
 // COMPILE-TIME ERROR CHECKING OF DEFINE VALUES:
 

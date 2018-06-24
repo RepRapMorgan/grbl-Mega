@@ -41,6 +41,8 @@
 #define PL_COND_FLAG_SPINDLE_CCW       bit(5)
 #define PL_COND_FLAG_COOLANT_FLOOD     bit(6)
 #define PL_COND_FLAG_COOLANT_MIST      bit(7)
+#define PL_COND_FLAG_FEED_PER_REV      bit(8)
+
 #define PL_COND_MOTION_MASK    (PL_COND_FLAG_RAPID_MOTION|PL_COND_FLAG_SYSTEM_MOTION|PL_COND_FLAG_NO_FEED_OVERRIDE)
 #define PL_COND_ACCESSORY_MASK (PL_COND_FLAG_SPINDLE_CW|PL_COND_FLAG_SPINDLE_CCW|PL_COND_FLAG_COOLANT_FLOOD|PL_COND_FLAG_COOLANT_MIST)
 
@@ -58,7 +60,7 @@ typedef struct {
     uint8_t direction_bits;    // The direction bit set for this block (refers to *_DIRECTION_BIT in config.h)
   #endif // DEFAULTS_RAMPS_BOARD
   // Block condition data to ensure correct execution depending on states and overrides.
-  uint8_t condition;      // Block bitflag variable defining block run conditions. Copied from pl_line_data.
+  uint16_t condition;      // Block bitflag variable defining block run conditions. Copied from pl_line_data.
   int32_t line_number;  // Block line number for real-time reporting. Copied from pl_line_data.
 
   // Fields used by the motion planner to manage acceleration. Some of these values may be updated
@@ -69,7 +71,8 @@ typedef struct {
   float acceleration;        // Axis-limit adjusted line acceleration in (mm/min^2). Does not change.
   float millimeters;         // The remaining distance for this block to be executed in (mm).
                              // NOTE: This value may be altered by stepper algorithm during execution.
-
+  float total_millimeters;   // The total distance for this block to be executed in (mm). Does not change.
+                             // Used for progress tracking in spindle sync moves.
   // Stored rate limiting data used by planner when changes occur.
   float max_junction_speed_sqr; // Junction entry speed limit based on direction vectors in (mm/min)^2
   float rapid_rate;             // Axis-limit adjusted maximum rate for this block direction in (mm/min)
@@ -85,7 +88,7 @@ typedef struct {
   float feed_rate;          // Desired feed rate for line motion. Value is ignored, if rapid motion.
   float spindle_speed;      // Desired spindle speed through line motion.
   int32_t line_number;    // Desired line number to report when executing.
-  uint8_t condition;        // Bitflag variable to indicate planner conditions. See defines above.
+  uint16_t condition;        // Bitflag variable to indicate planner conditions. See defines above.
 } plan_line_data_t;
 
 

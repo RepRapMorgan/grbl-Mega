@@ -260,7 +260,13 @@ float plan_compute_profile_nominal_speed(plan_block_t *block)
 {
   float nominal_speed = block->programmed_rate;
   if (block->condition & PL_COND_FLAG_RAPID_MOTION) { nominal_speed *= (0.01*sys.r_override); }
-  else {
+  else 
+  if (block->condition & PL_COND_FLAG_FEED_PER_REV) { // SPINDLE_SYNC
+      // convert feed per revolution to actual feed rate based on given spindle speed
+      // this is important as the planner needs to know the approximate actual speed to obey acceleration limits.
+      // In spindle sync mode, the actual spindle speed is used to tune the final feedrate.
+      nominal_speed = block->programmed_rate * block->spindle_speed; 
+  } else {
     if (!(block->condition & PL_COND_FLAG_NO_FEED_OVERRIDE)) { nominal_speed *= (0.01*sys.f_override); }
     if (nominal_speed > block->rapid_rate) { nominal_speed = block->rapid_rate; }
   }
@@ -385,6 +391,7 @@ uint8_t plan_buffer_line(float *target, plan_line_data_t *pl_data)
   // NOTE: This calculation assumes all axes are orthogonal (Cartesian) and works with ABC-axes,
   // if they are also orthogonal/independent. Operates on the absolute value of the unit vector.
   block->millimeters = convert_delta_vector_to_unit_vector(unit_vec);
+  block->total_millimeters = block->millimeters; // set total distance (same as remaining at the start). 
   block->acceleration = limit_value_by_axis_maximum(settings.acceleration, unit_vec);
   block->rapid_rate = limit_value_by_axis_maximum(settings.max_rate, unit_vec);
 

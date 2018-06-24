@@ -19,13 +19,17 @@
   along with Grbl.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef spindle_control_h
-#define spindle_control_h
+#ifndef spindle_encoder_h
+#define spindle_encoder_h
+
+#include "grbl.h"
 
 typedef struct {
     uint16_t current_encoder_count;
     uint16_t revolution_counter;
-    
+	uint16_t speed;
+	uint16_t ticks_per_rev;
+    uint32_t last_tick_time;
 } spindle_encoder_state_t;
 
 // Initializes spindle pins and hardware PWM, if enabled.
