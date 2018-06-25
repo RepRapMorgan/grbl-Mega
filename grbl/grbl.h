@@ -64,6 +64,7 @@
 
 #include "timekeeper.h"
 #include "spindle_encoder.h"
+#include "spindle_sync.h"
 // ---------------------------------------------------------------------------------------
 // COMPILE-TIME ERROR CHECKING OF DEFINE VALUES:
 

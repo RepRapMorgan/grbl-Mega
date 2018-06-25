@@ -19,7 +19,7 @@ void spindle_encoder_init() {
    spindle_encoder.current_encoder_count=0;
    spindle_encoder.revolution_counter=0;
    spindle_encoder.last_tick_time=0;
-   spindle_encoder.ticks_per_rev=600;
+   spindle_encoder.ticks_per_rev=4;
 }
 
 // Returns current spindle angle in 100x degrees (estimated from encoder inputs and current speed).
@@ -29,7 +29,7 @@ uint16_t spindle_get_relative_angle() {
 
 // Returns total amount of revolutions since last reset. Warning: this can overflow after some time, reset before use.
 uint16_t spindle_get_revolutions() {
-	return spindle_encoder.current_encoder_count;
+	return spindle_encoder.current_encoder_count/spindle_encoder.ticks_per_rev;
 }
 
 // Returns current spindle speed in RPM 
@@ -39,4 +39,11 @@ int16_t spindle_get_speed() {
 		spindle_encoder.speed=0;
 	}
 	return spindle_encoder.speed; 
+}
+
+void spindle_wait_for_zero() {
+    uint16_t current_revs=spindle_get_revolutions();
+    while (current_revs == spindle_get_revolutions()) {  // wait spindle position changes
+        
+    }
 }

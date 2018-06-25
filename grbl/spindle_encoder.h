@@ -44,4 +44,7 @@ uint16_t spindle_get_revolutions();
 // Returns current spindle speed in RPM 
 int16_t spindle_get_speed();
 
+// blocks until spindle crosses through zero
+void spindle_wait_for_zero();
+
 #endif

@@ -12,6 +12,10 @@ void spindle_sync_update() {
   }
 }
 
+void spindle_sync_wait(float angle) {
+    
+}
+
 
 uint8_t mc_spindle_sync_cycle(float *target, plan_line_data_t *pl_data, uint8_t parser_flags)
 {

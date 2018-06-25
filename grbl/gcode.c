@@ -973,7 +973,12 @@ uint8_t gc_execute_line(char *line)
   #endif
 
   // [10. Dwell ]:
-  if (gc_block.non_modal_command == NON_MODAL_DWELL) { mc_dwell(gc_block.values.p); }
+  if (gc_block.non_modal_command == NON_MODAL_DWELL) { 
+      mc_dwell(gc_block.values.p); 
+      if (gc_state.modal.feed_rate==FEED_RATE_MODE_UNITS_PER_REV) { // in feed per rev mode, also wait for spindle sync
+          spindle_wait_for_zero();
+      }
+  }
 
   // [11. Set active plane ]:
   gc_state.modal.plane_select = gc_block.modal.plane_select;

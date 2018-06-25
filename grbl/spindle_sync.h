@@ -4,6 +4,6 @@
 #include "grbl.h"
 
 void spindle_sync_update();
-
+void spindle_sync_wait(float angle); 
 
 #endif
