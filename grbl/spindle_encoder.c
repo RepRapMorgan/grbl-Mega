@@ -26,8 +26,8 @@ void spindle_encoder_init() {
 float spindle_get_relative_angle() {
 	uint32_t now = get_timer_ticks();
     // get rough angle based on encoder ticks
-    float angle = 360.0 * (spindle_encoder.current_encoder_count%spindle_encoder.ticks_per_rev);
-    angle += ((uint32_t)spindle_encoder.speed * (now - spindle_encoder.last_tick_time)) * 60.0 / spindle_encoder.ticks_per_rev / 1000000;
+    float angle = 360.0 * (spindle_encoder.current_encoder_count % spindle_encoder.ticks_per_rev);
+    angle += ((float)spindle_encoder.speed/60.0) * ((float)(now - spindle_encoder.last_tick_time) / 1000000.0);
     return angle;
 }
 
