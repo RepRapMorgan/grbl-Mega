@@ -71,8 +71,6 @@ typedef struct {
   float acceleration;        // Axis-limit adjusted line acceleration in (mm/min^2). Does not change.
   float millimeters;         // The remaining distance for this block to be executed in (mm).
                              // NOTE: This value may be altered by stepper algorithm during execution.
-  float total_millimeters;   // The total distance for this block to be executed in (mm). Does not change.
-                             // Used for progress tracking in spindle sync moves.
   // Stored rate limiting data used by planner when changes occur.
   float max_junction_speed_sqr; // Junction entry speed limit based on direction vectors in (mm/min)^2
   float rapid_rate;             // Axis-limit adjusted maximum rate for this block direction in (mm/min)

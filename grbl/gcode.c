@@ -158,7 +158,7 @@ uint8_t gc_execute_line(char *line)
               mantissa = 0; // Set to zero to indicate valid non-integer G command.
             }                
             break;
-          case 0: case 1: case 2: case 3: case 38:
+          case 0: case 1: case 2: case 3: case 38: case 33:
             // Check for G0/1/2/3/38 being called with G10/28/30/92 on same block.
             // * G43.1 is also an axis command but is not explicitly defined this way.
             if (axis_command) { FAIL(STATUS_GCODE_AXIS_COMMAND_CONFLICT); } // [Axis word/command conflict]
@@ -662,6 +662,14 @@ uint8_t gc_execute_line(char *line)
       // Axis words are optional. If missing, set axis command flag to ignore execution.
       if (!axis_words) { axis_command = AXIS_COMMAND_NONE; }
 
+    } else 
+    if (gc_block.modal.motion == MOTION_MODE_SPINDLE_SYNC) {
+      // [G33 Errors]: Axis letter not configured or without real value (done.)
+      // Axis words are optional, but K value (pitch per rev) has to be defined. 
+      if (bit_isfalse(value_words, WORD_K)) { FAIL(STATUS_GCODE_VALUE_WORD_MISSING); } // check if K is defined
+      if (!axis_words) { axis_command = AXIS_COMMAND_NONE; }
+      gc_block.values.k = gc_block.values.ijk[Z_AXIS]; // copy pitch value, as it will be needed for following commands
+
     // All remaining motion modes (all but G0 and G80), require a valid feed rate value. In units per mm mode,
     // the value must be positive. In inverse time mode, a positive value must be passed with each block.
     } else {
@@ -1079,6 +1087,8 @@ uint8_t gc_execute_line(char *line)
       } else if ((gc_state.modal.motion == MOTION_MODE_CW_ARC) || (gc_state.modal.motion == MOTION_MODE_CCW_ARC)) {
         mc_arc(gc_block.values.xyz, pl_data, gc_state.position, gc_block.values.ijk, gc_block.values.r,
             axis_0, axis_1, axis_linear, bit_istrue(gc_parser_flags,GC_PARSER_ARC_IS_CLOCKWISE));
+      } else if (gc_state.modal.motion == MOTION_MODE_SPINDLE_SYNC) { //G33 threading mode
+        mc_line(gc_block.values.xyz, pl_data);
       } else {
         // NOTE: gc_block.values.xyz is returned from mc_probe_cycle with the updated position value. So
         // upon a successful probing cycle, the machine position and the returned value should be the same.

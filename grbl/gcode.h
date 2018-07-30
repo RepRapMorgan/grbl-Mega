@@ -70,6 +70,7 @@
 #define MOTION_MODE_LINEAR 1 // G1 (Do not alter value)
 #define MOTION_MODE_CW_ARC 2  // G2 (Do not alter value)
 #define MOTION_MODE_CCW_ARC 3  // G3 (Do not alter value)
+#define MOTION_MODE_SPINDLE_SYNC 33 // G33 (spindle synced motion) (do not alter value)
 #define MOTION_MODE_PROBE_TOWARD 140 // G38.2 (Do not alter value)
 #define MOTION_MODE_PROBE_TOWARD_NO_ERROR 141 // G38.3 (Do not alter value)
 #define MOTION_MODE_PROBE_AWAY 142 // G38.4 (Do not alter value)
@@ -202,6 +203,7 @@ typedef struct {
 
 typedef struct {
   float f;         // Feed
+  float k;         // pitch (k parameter) for spindle sync mode (G33)
   float ijk[N_AXIS];    // I,J,K Axis arc offsets
   uint8_t l;       // G10 or canned cycles parameters
   int32_t n;       // Line number

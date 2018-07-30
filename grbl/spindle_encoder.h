@@ -24,6 +24,8 @@
 
 #include "grbl.h"
 
+#define SPINDLE_ENCODER_TICKS_PER_REV 4
+
 typedef struct {
     uint16_t current_encoder_count;
     uint16_t revolution_counter;

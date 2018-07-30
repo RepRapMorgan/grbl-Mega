@@ -19,12 +19,14 @@ void spindle_encoder_init() {
    spindle_encoder.current_encoder_count=0;
    spindle_encoder.revolution_counter=0;
    spindle_encoder.last_tick_time=0;
-   spindle_encoder.ticks_per_rev=4;
+   spindle_encoder.ticks_per_rev=SPINDLE_ENCODER_TICKS_PER_REV;
 }
 
 // Returns current spindle angle in 100x degrees (estimated from encoder inputs and current speed).
 uint16_t spindle_get_relative_angle() {
-	
+	uint32_t now = get_timer_ticks();
+    uint32_t angle = (uint32_t)spindle_encoder.speed * (now - spindle_encoder.last_tick_time) * 360 / spindle_encoder.ticks_per_rev / 600000;
+    return angle;
 }
 
 // Returns total amount of revolutions since last reset. Warning: this can overflow after some time, reset before use.
@@ -42,7 +44,7 @@ int16_t spindle_get_speed() {
 }
 
 void spindle_wait_for_zero() {
-    uint16_t current_revs=spindle_get_revolutions();
+    uint16_t current_revs = spindle_get_revolutions();
     while (current_revs == spindle_get_revolutions()) {  // wait spindle position changes
         
     }
