@@ -984,7 +984,11 @@ uint8_t gc_execute_line(char *line)
   if (gc_block.non_modal_command == NON_MODAL_DWELL) { 
       mc_dwell(gc_block.values.p); 
       if (gc_state.modal.feed_rate==FEED_RATE_MODE_UNITS_PER_REV) { // in feed per rev mode, also wait for spindle sync
-          spindle_wait_for_zero();
+        if (bit_istrue(value_words,bit(WORD_R))) { // check if R parameter was given (spindle angle)
+          spindle_sync_wait(gc_block.values.r);
+        } else { // if there is no R parameter, wait for zero position
+          spindle_sync_wait_for_zero();
+        }
       }
   }
 

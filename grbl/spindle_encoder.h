@@ -37,8 +37,8 @@ typedef struct {
 // Initializes spindle pins and hardware PWM, if enabled.
 void spindle_encoder_init();
 
-// Returns current spindle angle in 100x degrees (estimated from encoder inputs and current speed).
-uint16_t spindle_get_relative_angle();
+// Returns current spindle angle in degrees (estimated from encoder inputs and current speed).
+float spindle_get_relative_angle();
 
 // Returns total amount of revolutions since last reset. Warning: this can overflow after some time, reset before use.
 uint16_t spindle_get_revolutions();
@@ -46,7 +46,5 @@ uint16_t spindle_get_revolutions();
 // Returns current spindle speed in RPM 
 int16_t spindle_get_speed();
 
-// blocks until spindle crosses through zero
-void spindle_wait_for_zero();
 
 #endif
