@@ -453,7 +453,10 @@ uint8_t gc_execute_line(char *line)
   // [10. Dwell ]: P value missing. P is negative (done.) NOTE: See below.
   if (gc_block.non_modal_command == NON_MODAL_DWELL) {
     if (bit_isfalse(value_words,bit(WORD_P))) { FAIL(STATUS_GCODE_VALUE_WORD_MISSING); } // [P word missing]
+    if (bit_isfalse(value_words, bit(WORD_R))) { gc_block.values.r = 0.0f; } // set zero angle if not specified
     bit_false(value_words,bit(WORD_P));
+    bit_false(value_words,bit(WORD_R));
+    
   }
 
   // [11. Set active plane ]: N/A
@@ -984,7 +987,7 @@ uint8_t gc_execute_line(char *line)
   if (gc_block.non_modal_command == NON_MODAL_DWELL) { 
       mc_dwell(gc_block.values.p); 
       if (gc_state.modal.feed_rate==FEED_RATE_MODE_UNITS_PER_REV) { // in feed per rev mode, also wait for spindle sync
-        if (bit_istrue(value_words,bit(WORD_R))) { // check if R parameter was given (spindle angle)
+        if (gc_block.values.r!=0.0f) { // check if R parameter was given (spindle angle)
           spindle_sync_wait(gc_block.values.r);
         } else { // if there is no R parameter, wait for zero position
           spindle_sync_wait_for_zero();
