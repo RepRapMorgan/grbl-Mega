@@ -22,9 +22,15 @@ void spindle_sync_wait(float angle) {
         adjusted_angle = adjusted_angle - ((int)(adjusted_angle/360.0f)) *360.0;         
     }
     // if we're already past the point, wait for wraparound
-    while (spindle_get_relative_angle() > adjusted_angle);
+    while (spindle_get_relative_angle() > adjusted_angle) {
+       printFloat(spindle_get_relative_angle(), 1);printString("\n");
+    };
     // wait for the crossing of given angle
-    while (spindle_get_relative_angle() < adjusted_angle);
+    while (spindle_get_relative_angle() < adjusted_angle) {
+      printFloat(spindle_get_relative_angle(), 1);printString("\n");
+    };
+    printFloat(spindle_get_relative_angle(), 1);printString("\n");
+    
 }
 
 void spindle_sync_set_starting_point() {

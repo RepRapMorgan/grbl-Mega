@@ -988,6 +988,7 @@ uint8_t gc_execute_line(char *line)
       mc_dwell(gc_block.values.p); 
       if (gc_state.modal.feed_rate==FEED_RATE_MODE_UNITS_PER_REV) { // in feed per rev mode, also wait for spindle sync
         if (gc_block.values.r!=0.0f) { // check if R parameter was given (spindle angle)
+          printString("Waiting for angle"); printFloat(gc_block.values.r, 1); printString("\n");
           spindle_sync_wait(gc_block.values.r);
         } else { // if there is no R parameter, wait for zero position
           spindle_sync_wait_for_zero();
