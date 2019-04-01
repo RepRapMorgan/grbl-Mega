@@ -10,6 +10,18 @@ Very useful on lathes, where the radius offset is on X, and toolholders vary in 
 
 * I added a project/workspace for Codelite, and a separate upload.sh script.
 
+* the branch "spindle_sync" has experimental code for lathe threading. It implements a feed per revolution mode (G95), based on encoder-measured spindle speed. Further, the G4 pause command waits for the given time, and then waits a bit more for the next spindle zero crossing. This allows to line up multiple passes. Example threading pass:
+
+~~~~~
+G0 X1 Z0 ; go to start position
+G95 ; Feed per revolution mode
+G0 X-0.5 ; go to cutting depth, clear of workpiece
+G4 P1 ; Dwell and wait for spindle sync (in G95 mode)
+G1 F1 Z-20 ; start threading pass
+G0X1 ; retract at end of move
+Z0 ; end of pass`
+~~~~
+
 ![GitHub Logo](https://github.com/gnea/gnea-Media/blob/master/Grbl%20Logo/Grbl%20Logo%20250px.png?raw=true)
 ***
 _Click the `Release` tab to download pre-compiled `.hex` files or just [click here](https://github.com/gnea/grbl-Mega/releases)_
