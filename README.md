@@ -19,7 +19,7 @@ G0 X-0.5 ; go to cutting depth, clear of workpiece
 G4 P1 ; Dwell and wait for spindle sync (in G95 mode)
 G1 F1 Z-20 ; start threading pass
 G0X1 ; retract at end of move
-Z0 ; end of pass`
+Z0 ; end of pass
 ~~~~
 
 ![GitHub Logo](https://github.com/gnea/gnea-Media/blob/master/Grbl%20Logo/Grbl%20Logo%20250px.png?raw=true)
