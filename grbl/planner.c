@@ -266,6 +266,11 @@ float plan_compute_profile_nominal_speed(plan_block_t *block)
       // this is important as the planner needs to know the approximate actual speed to obey acceleration limits.
       // In spindle sync mode, the actual spindle speed is used to tune the final feedrate.
       nominal_speed = block->programmed_rate * block->spindle_speed; 
+      // check if resulting speed exceeds machine capability
+      // this is also a safety feature when forgetting to issue G94 after G95, and commanding a very large feed due to it.
+      if (nominal_speed > block->rapid_rate) { 
+          system_set_exec_state_flag(EXEC_FEED_HOLD); // hold feed if going too fast.
+      }
   } else {
     if (!(block->condition & PL_COND_FLAG_NO_FEED_OVERRIDE)) { nominal_speed *= (0.01*sys.f_override); }
     if (nominal_speed > block->rapid_rate) { nominal_speed = block->rapid_rate; }
