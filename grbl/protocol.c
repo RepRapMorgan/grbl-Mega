@@ -243,6 +243,24 @@ void protocol_exec_rt_system()
   }
 
   rt_exec = sys_rt_exec_state; // Copy volatile sys_rt_exec_state.
+
+  // analog feedrate override from potentiometer:
+  int new_f_override = adc_get_last_value()/4;
+  if (new_f_override==0) {
+     rt_exec|=EXEC_FEED_HOLD;
+  }
+  if ((sys.state==STATE_HOLD) && new_f_override>0) {
+     rt_exec|=EXEC_CYCLE_START;
+  }
+  new_f_override = min(new_f_override,MAX_FEED_RATE_OVERRIDE);
+  new_f_override = max(new_f_override,MIN_FEED_RATE_OVERRIDE);
+  if ((new_f_override != sys.f_override) ) {
+    sys.f_override = new_f_override;
+    sys.report_ovr_counter = 0; // Set to report change immediately
+    plan_update_velocity_profile_parameters();
+    plan_cycle_reinitialize();
+  }
+
   if (rt_exec) {
 
     // Execute system abort.

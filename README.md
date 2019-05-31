@@ -1,3 +1,9 @@
+Fork of GRBL with experimental feedrate override controlled by analog knob on ADC input.
+
+Change FEED_OVERRIDE_ANALOG_IN in config.h to the correct analog input. If the voltage reading is 0, GRBL will enter HOLD mode, and resume when the input increases.
+
+
+
 ![GitHub Logo](https://github.com/gnea/gnea-Media/blob/master/Grbl%20Logo/Grbl%20Logo%20250px.png?raw=true)
 ***
 _Click the `Release` tab to download pre-compiled `.hex` files or just [click here](https://github.com/gnea/grbl-Mega/releases)_
