@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CodeLite_Project Name="grbl_mega" InternalType="">
+<CodeLite_Project Name="grbl_mega" InternalType="" Version="10.0.0">
   <Plugins>
     <Plugin Name="qmake">
       <![CDATA[00010001N0005Debug000000000000]]>
@@ -20,6 +20,8 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="grbl">
+    <File Name="grbl/analog.c"/>
+    <File Name="grbl/analog.h"/>
     <File Name="grbl/planner.c"/>
     <File Name="grbl/stepper.c"/>
     <File Name="grbl/eeprom.c"/>

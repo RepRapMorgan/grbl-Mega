@@ -88,6 +88,7 @@ int main(void)
     serial_reset_read_buffer(); // Clear serial read buffer
     gc_init(); // Set g-code parser to default state
     spindle_init();
+    ADC_Init(3); // initialise ADC readout with interrupt for feedrate override potentiometer
     coolant_init();
     limits_init();
     probe_init();
