@@ -21,11 +21,13 @@
     void ADC_Init(uint8_t channel) {
 
 
-     ADCSRA = ((1 << ADPS2) | (1 << ADPS1) | (0 << ADPS0)); //ADC conversion clock frequency divider to 64. ADC Clock 16MHz/64 = 250kHz
+     ADCSRA = ((1 << ADPS2) | (1 << ADPS1) | (0 << ADPS1)); //ADC conversion clock frequency divider to 128. ADC Clock 16MHz/128 = 125kHz
      ADMUX = (1 << REFS0); //Set Voltage reference to Avcc (5v)
      ADMUX |= channel;
      ADCSRB &= ~((0 << ADTS2) | (0 << ADTS1) | (0 << ADTS0)); //Select free running. 13 ADC clock cycles per converson ADC sample rate 250kHz/13 = 19.23kS/s
-     ADCSRA |= (1 << ADEN) | (1 << ADIE) | (1 << ADATE); //Turn on ADC, Enable interrupts, enable automatic triggering
+     
+     ADCSRA |= (1 << ADEN) | (1 << ADIE) | (1 << ADATE); //Turn on ADC,  enable automatic triggering
+     //ADCSRA |= (1 << ADIE); // turn on interrupt
      ADCSRA |= (1 << ADSC); //start conversion
       // Kick off the first ADC
       adc_read_flag = 0;
@@ -36,6 +38,7 @@
     }
     
     int adc_get_last_value() {
+        analog_value = ADCL | (ADCH << 8); // read last conversion result
         return analog_value;
     }
     
