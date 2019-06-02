@@ -244,9 +244,9 @@ void protocol_exec_rt_system()
 
   rt_exec = sys_rt_exec_state; // Copy volatile sys_rt_exec_state.
 
-  // analog feedrate override from potentiometer:
-  int new_f_override = adc_get_last_value()/4;
-  if (new_f_override==0) {
+  // analog feedrate override from potentiometer (apply some low pass filtering)
+  int new_f_override = (7*sys.f_override + adc_get_last_value()/4)/8;
+  if (new_f_override<MIN_FEED_RATE_OVERRIDE) {
      rt_exec|=EXEC_FEED_HOLD;
   }
   if ((sys.state==STATE_HOLD) && new_f_override>0) {
