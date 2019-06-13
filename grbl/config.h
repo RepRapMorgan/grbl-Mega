@@ -89,7 +89,7 @@
 // If homing is enabled, homing init lock sets Grbl into an alarm state upon power up. This forces
 // the user to perform the homing cycle (or override the locks) before doing anything else. This is
 // mainly a safety feature to remind the user to home, since position is unknown to Grbl.
-#define HOMING_INIT_LOCK // Comment to disable
+//#define HOMING_INIT_LOCK // Comment to disable
 
 // Define the homing cycle patterns with bitmasks. The homing cycle first performs a search mode
 // to quickly engage the limit switches, followed by a slower locate mode, and finished by a short
@@ -249,7 +249,7 @@
 #define FEED_OVERRIDE_FINE_INCREMENT      1 // (1-99). Usually 1%.
 
 // Analog feed override input (ADC channel, check ATMega datasheet)
-#define FEED_OVERRIDE_ANALOG_IN 3 // this channel is accessible on AUX1 on RAMPS board
+#define FEED_OVERRIDE_ANALOG_IN 5 // this channel is accessible on AUX1 on RAMPS board
 
 #define DEFAULT_RAPID_OVERRIDE  100 // 100%. Don't change this value.
 #define RAPID_OVERRIDE_MEDIUM    50 // Percent of rapid (1-99). Usually 50%.

@@ -20,7 +20,7 @@
 */
 
 #include "grbl.h"
-
+#include "main_menu.h"
 // Define line flags. Includes comment type tracking and line overflow detection.
 #define LINE_FLAG_OVERFLOW bit(0)
 #define LINE_FLAG_COMMENT_PARENTHESES bit(1)
@@ -37,6 +37,7 @@ static void protocol_exec_rt_suspend();
 */
 void protocol_main_loop()
 {
+    
   // Perform some machine checks to make sure everything is good to go.
   #ifdef CHECK_LIMITS_AT_INIT
     if (bit_istrue(settings.flags, BITFLAG_HARD_LIMIT_ENABLE)) {
@@ -73,6 +74,9 @@ void protocol_main_loop()
   uint8_t c;
   for (;;) {
 
+    // run menu-triggered programs
+    execute_program();
+      
     // Process one line of incoming serial data, as the data becomes available. Performs an
     // initial filtering by removing spaces and comments and capitalizing all letters.
     while((c = serial_read()) != SERIAL_NO_DATA) {
@@ -163,6 +167,7 @@ void protocol_main_loop()
       // Check for sleep conditions and execute auto-park, if timeout duration elapses.
       sleep_check();    
     #endif
+
   }
 
   return; /* Never reached */

@@ -20,7 +20,7 @@
 */
 
 #include "grbl.h"
-
+#include "main_menu.h"
 
 // Declare system global variable structure
 system_t sys;
@@ -65,11 +65,14 @@ int main(void)
   #ifdef HOMING_INIT_LOCK
     if (bit_istrue(settings.flags,BITFLAG_HOMING_ENABLE)) { sys.state = STATE_ALARM; }
   #endif
-
+    
+    init_menu();
   // Grbl initialization loop upon power-up or a system abort. For the latter, all processes
   // will return to this loop to be cleanly re-initialized.
   for(;;) {
-
+    run_menu();
+    sys.state = STATE_IDLE;
+    
     // Reset system variables.
     uint8_t prior_state = sys.state;
     memset(&sys, 0, sizeof(system_t)); // Clear system struct variable.
@@ -100,6 +103,8 @@ int main(void)
     plan_sync_position();
     gc_sync_position();
 
+    
+    
     // Print welcome message. Indicates an initialization has occured at power-up or with a reset.
     report_init_message();
 
