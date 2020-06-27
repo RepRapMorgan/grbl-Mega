@@ -1,5 +1,5 @@
 /*
-  settings.c - eeprom configuration handling 
+  settings.c - eeprom configuration handling
   Part of Grbl
 
   Copyright (c) 2011-2016 Sungeun K. Jeon for Gnea Research LLC
@@ -22,6 +22,42 @@
 #include "grbl.h"
 
 settings_t settings;
+
+const __flash settings_t defaults = {\
+    .pulse_microseconds = DEFAULT_STEP_PULSE_MICROSECONDS,
+    .stepper_idle_lock_time = DEFAULT_STEPPER_IDLE_LOCK_TIME,
+    .step_invert_mask = DEFAULT_STEPPING_INVERT_MASK,
+    .dir_invert_mask = DEFAULT_DIRECTION_INVERT_MASK,
+    .status_report_mask = DEFAULT_STATUS_REPORT_MASK,
+    .junction_deviation = DEFAULT_JUNCTION_DEVIATION,
+    .arc_tolerance = DEFAULT_ARC_TOLERANCE,
+    .rpm_max = DEFAULT_SPINDLE_RPM_MAX,
+    .rpm_min = DEFAULT_SPINDLE_RPM_MIN,
+    .homing_dir_mask = DEFAULT_HOMING_DIR_MASK,
+    .homing_feed_rate = DEFAULT_HOMING_FEED_RATE,
+    .homing_seek_rate = DEFAULT_HOMING_SEEK_RATE,
+    .homing_debounce_delay = DEFAULT_HOMING_DEBOUNCE_DELAY,
+    .homing_pulloff = DEFAULT_HOMING_PULLOFF,
+    .flags = (DEFAULT_REPORT_INCHES << BIT_REPORT_INCHES) | \
+             (DEFAULT_LASER_MODE << BIT_LASER_MODE) | \
+             (DEFAULT_INVERT_ST_ENABLE << BIT_INVERT_ST_ENABLE) | \
+             (DEFAULT_HARD_LIMIT_ENABLE << BIT_HARD_LIMIT_ENABLE) | \
+             (DEFAULT_HOMING_ENABLE << BIT_HOMING_ENABLE) | \
+             (DEFAULT_SOFT_LIMIT_ENABLE << BIT_SOFT_LIMIT_ENABLE) | \
+             (DEFAULT_INVERT_LIMIT_PINS << BIT_INVERT_LIMIT_PINS) | \
+             (DEFAULT_INVERT_PROBE_PIN << BIT_INVERT_PROBE_PIN),
+    .steps_per_mm[X_AXIS] = DEFAULT_X_STEPS_PER_MM,
+    .steps_per_mm[Y_AXIS] = DEFAULT_Y_STEPS_PER_MM,
+    .steps_per_mm[Z_AXIS] = DEFAULT_Z_STEPS_PER_MM,
+    .max_rate[X_AXIS] = DEFAULT_X_MAX_RATE,
+    .max_rate[Y_AXIS] = DEFAULT_Y_MAX_RATE,
+    .max_rate[Z_AXIS] = DEFAULT_Z_MAX_RATE,
+    .acceleration[X_AXIS] = DEFAULT_X_ACCELERATION,
+    .acceleration[Y_AXIS] = DEFAULT_Y_ACCELERATION,
+    .acceleration[Z_AXIS] = DEFAULT_Z_ACCELERATION,
+    .max_travel[X_AXIS] = (-DEFAULT_X_MAX_TRAVEL),
+    .max_travel[Y_AXIS] = (-DEFAULT_Y_MAX_TRAVEL),
+    .max_travel[Z_AXIS] = (-DEFAULT_Z_MAX_TRAVEL)};
 
 
 // Method to store startup lines into EEPROM
